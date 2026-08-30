@@ -2,398 +2,234 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMKM DESA - Belanja Langsung dari Warga</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UMKM DESA</title>
     <style>
-        /* === PENGATURAN DASAR === */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f0f2f5;
-            color: #333;
-        }
-
-        /* Membatasi lebar agar rapi di laptop, tapi full di HP */
+        /* PENGATURAN DASAR - MOBILE FIRST */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: #e9ecef; display: flex; justify-content: center; }
+        
+        /* Membungkus tampilan agar mirip layar HP di tengah layar laptop */
         .app-container {
-            max-width: 600px; /* Ukuran ala layar HP */
-            margin: 0 auto;
-            background-color: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            background-color: #f4f7f6;
             min-height: 100vh;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 20px;
         }
 
-        /* === HEADER === */
-        header {
-            background: linear-gradient(135deg, #2E7D32, #4CAF50);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .logo-subtitle {
-            font-size: 11px;
-            opacity: 0.9;
-        }
+        /* HEADER & BERITA */
+        header { background-color: #2E7D32; color: white; text-align: center; padding: 15px 10px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; }
+        header h1 { font-size: 22px; margin-bottom: 5px; }
+        header p { font-size: 12px; opacity: 0.9; }
+        
+        .news-ticker { background-color: #F57C00; color: white; display: flex; padding: 8px 15px; font-size: 13px; font-weight: bold; margin-top: -10px; z-index: 10; position: relative; width: 90%; margin-left: auto; margin-right: auto; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .news-ticker span { margin-right: 10px; }
 
-        /* === BERITA MARQUEE === */
-        .news-banner {
-            background-color: #F57C00;
-            color: white;
-            display: flex;
-            padding: 8px 15px;
-            font-size: 13px;
-            font-weight: bold;
-            align-items: center;
-        }
-        .news-icon {
-            margin-right: 10px;
-            white-space: nowrap;
-        }
-
-        /* === KONTEN UTAMA === */
-        main {
-            padding: 15px;
-        }
-
-        /* === SLIDER GAMBAR === */
+        /* SLIDER KECIL (DIPERBARUI) */
         .slider-container {
-            width: 100%;
-            height: 180px;
+            width: 80%; /* Lebar dikecilkan */
+            max-width: 300px;
+            height: 140px;
+            margin: 25px auto; /* Di tengah */
             border-radius: 12px;
             overflow: hidden;
             position: relative;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background-color: #ddd;
         }
         .slide {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; top: 0; left: 0;
+            opacity: 0; transition: opacity 0.8s ease-in-out;
         }
-        .slide.active {
-            opacity: 1;
-        }
-        .slider-dots {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            background-color: rgba(255,255,255,0.5);
-            border-radius: 50%;
-        }
-        .dot.active {
-            background-color: white;
-        }
+        .slide.active { opacity: 1; }
 
-        /* === MENU GRID (6 KOTAK) === */
-        .menu-grid {
+        /* GRID TOKO (6 KOTAK MENU) */
+        .section-title { text-align: center; font-size: 16px; color: #2E7D32; margin: 10px 0 15px 0; font-weight: bold; }
+        .grid-toko {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 15px;
+            padding: 0 20px;
         }
-        .menu-item {
-            background-color: #ffffff;
-            border: 1px solid #eee;
+        .kotak-toko {
+            background: white;
             border-radius: 12px;
             padding: 15px 5px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.06);
             cursor: pointer;
-        }
-        .menu-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-color: #4CAF50;
-        }
-        .menu-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-        .menu-text {
-            font-size: 12px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        /* === PRODUK GRID === */
-        .section-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #2E7D32;
-            margin-bottom: 15px;
-            border-left: 4px solid #F57C00;
-            padding-left: 10px;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding-bottom: 20px;
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
+            transition: transform 0.2s;
             border: 1px solid #eee;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
         }
-        .card img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-        }
-        .card-body {
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-        .toko-nama {
-            font-size: 10px;
-            color: #F57C00;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-        .produk-nama {
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 6px;
-            line-height: 1.3;
-        }
-        .produk-harga {
-            font-size: 14px;
-            font-weight: bold;
-            color: #2E7D32;
-            margin-bottom: 12px;
-        }
-        .btn-wa {
-            background-color: #25D366;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-top: auto;
-            display: block;
-        }
-        .btn-wa:hover { background-color: #128C7E; }
+        .kotak-toko:active { transform: scale(0.95); background-color: #f0f0f0; }
+        .icon-toko { font-size: 32px; margin-bottom: 8px; display: block; }
+        .nama-toko { font-size: 12px; font-weight: bold; color: #333; line-height: 1.2; }
 
-        /* === FOOTER === */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            color: #777;
-            font-size: 11px;
-            border-top: 1px solid #eee;
+        /* POP-UP (MODAL) PRODUK & WHATSAPP */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none; justify-content: center; align-items: center;
+            z-index: 100; opacity: 0; transition: opacity 0.3s;
         }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .modal-content {
+            background: white; width: 85%; max-width: 320px;
+            border-radius: 15px; padding: 20px; text-align: center;
+            position: relative; transform: translateY(20px); transition: transform 0.3s;
+        }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+        .close-btn {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 24px; color: #999; cursor: pointer; font-weight: bold;
+        }
+        .modal-img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; background: #eee; }
+        .modal-nama-toko { font-size: 13px; color: #F57C00; font-weight: bold; margin-bottom: 5px; }
+        .modal-produk { font-size: 18px; color: #333; font-weight: bold; margin-bottom: 5px; }
+        .modal-harga { font-size: 16px; color: #2E7D32; font-weight: bold; margin-bottom: 20px; }
+        .btn-wa {
+            display: block; background-color: #25D366; color: white;
+            padding: 12px; border-radius: 8px; text-decoration: none;
+            font-size: 15px; font-weight: bold; box-shadow: 0 2px 5px rgba(37,211,102,0.4);
+        }
+        .btn-wa:active { background-color: #128C7E; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    
-    <!-- HEADER -->
-    <header>
-        <div>
-            <div class="logo-title">🎪 UMKM DESA</div>
-            <div class="logo-subtitle">Dukung Pedagang Kecil Sekitar Kita</div>
-        </div>
-    </header>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <h1>🎪 UMKM DESA</h1>
+            <p>Pusat Belanja Warga</p>
+        </header>
 
-    <!-- BERITA BERJALAN -->
-    <div class="news-banner">
-        <div class="news-icon">📢 INFO:</div>
-        <marquee id="teks-berita">Memuat berita terbaru...</marquee>
+        <!-- Berita Jalan -->
+        <div class="news-ticker">
+            <span>📢 INFO:</span>
+            <marquee id="teks-berita">Memuat informasi...</marquee>
+        </div>
+
+        <!-- Slider Kecil 3 Gambar -->
+        <div class="slider-container">
+            <img src="" class="slide active" id="slide1">
+            <img src="" class="slide" id="slide2">
+            <img src="" class="slide" id="slide3">
+        </div>
+
+        <!-- Menu Utama (6 Toko) -->
+        <h2 class="section-title">Pilih Pedagang</h2>
+        <div class="grid-toko" id="tempat-toko">
+            <!-- Kotak akan dimuat oleh JavaScript -->
+        </div>
+
+        <!-- Pop-up Detail & Pesan WA -->
+        <div class="modal-overlay" id="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="tutupPopup()">&times;</span>
+                <img src="" id="popup-img" class="modal-img">
+                <div class="modal-nama-toko" id="popup-toko">🏪 Nama Toko</div>
+                <div class="modal-produk" id="popup-produk">Nama Produk</div>
+                <div class="modal-harga" id="popup-harga">Rp 0</div>
+                <a href="#" id="popup-wa" class="btn-wa" target="_blank">📲 Pesan Sekarang</a>
+            </div>
+        </div>
     </div>
 
-    <main>
-        <!-- SLIDER GAMBAR -->
-        <div class="slider-container" id="image-slider">
-            <!-- Gambar slider dimuat via JavaScript -->
-        </div>
+    <script>
+        // ==========================================
+        // DATA ADMIN (SILAKAN EDIT DI SINI)
+        // ==========================================
+        const dataAdmin = {
+            berita: "Kerja bakti desa hari Minggu besok dibatalkan. Pasar desa tetap buka seperti biasa!",
+            
+            // Masukkan 3 Link Gambar untuk Slider
+            slider: [
+                "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80",
+                "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=400&q=80",
+                "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=400&q=80"
+            ],
 
-        <!-- MENU GRID (6 KOTAK) -->
-        <div class="menu-grid" id="menu-kategori">
-            <!-- Menu dimuat via JavaScript -->
-        </div>
+            // Data 6 Toko/Pedagang
+            daftarToko: [
+                { id: 1, nama: "Warung Sembako", ikon: "🏪", produk: "Beras, Minyak & Gula", harga: "Mulai Rp 15.000", gambar: "https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?w=400&q=80", wa: "6281234567890" },
+                { id: 2, nama: "Sayur Segar", ikon: "🥬", produk: "Paket Sayur Sop Komplit", harga: "Rp 10.000", gambar: "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=400&q=80", wa: "6281234567891" },
+                { id: 3, nama: "Kue Bu Tini", ikon: "🧁", produk: "Brownies & Bolu Lumer", harga: "Rp 35.000", gambar: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=400&q=80", wa: "6281234567892" },
+                { id: 4, nama: "Kopi Abah", ikon: "☕", produk: "Kopi Hitam Tumbuk Asli", harga: "Rp 12.000", gambar: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=400&q=80", wa: "6281234567893" },
+                { id: 5, nama: "Kerajinan Kang", ikon: "🧺", produk: "Tas Anyaman Bambu", harga: "Rp 50.000", gambar: "https://images.unsplash.com/photo-1590736969955-71cc94801759?w=400&q=80", wa: "6281234567894" },
+                { id: 6, nama: "Ayam Kampung", ikon: "🐓", produk: "Ayam Siap Potong", harga: "Rp 75.000/Ekor", gambar: "https://images.unsplash.com/photo-1542834369-f10ebf06d3e0?w=400&q=80", wa: "6281234567895" }
+            ]
+        };
 
-        <!-- PRODUK TERBARU -->
-        <div class="section-title">Rekomendasi Hari Ini</div>
-        <div class="product-grid" id="katalog-produk">
-            <!-- Produk dimuat via JavaScript -->
-        </div>
-    </main>
+        // ==========================================
+        // MESIN APLIKASI (TIDAK PERLU DIUBAH)
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Tampilkan Berita
+            document.getElementById("teks-berita").textContent = dataAdmin.berita;
 
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 Aplikasi UMKM Desa. Dibuat dengan ❤ untuk warga.</p>
-    </footer>
+            // 2. Setup Slider
+            document.getElementById("slide1").src = dataAdmin.slider[0];
+            document.getElementById("slide2").src = dataAdmin.slider[1];
+            document.getElementById("slide3").src = dataAdmin.slider[2];
 
-</div>
-
-<!-- ========================================== -->
-<!-- BAGIAN DATA ADMIN & MESIN APLIKASI (JAVASCRIPT) -->
-<!-- ========================================== -->
-<script>
-    // -----------------------------------------
-    // 1. DATA ADMIN (SILAKAN EDIT BAGIAN INI)
-    // -----------------------------------------
-    const dataAplikasi = {
-        
-        // Edit Teks Berita
-        berita: "Pasar UMKM Desa buka setiap hari Minggu di Balai Desa. Dapatkan diskon khusus untuk pembelian sayur organik!",
-
-        // Edit Gambar Slider (Masukkan 3 Link Gambar)
-        sliderImages: [
-            "https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", // Sayuran/Pasar
-            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", // Makanan
-            "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"  // Belanja
-        ],
-
-        // Edit 6 Menu Kategori (Ikon menggunakan Emoji agar praktis)
-        kategori: [
-            { nama: "Sayur & Buah", icon: "🥬" },
-            { nama: "Makanan", icon: "🍱" },
-            { nama: "Minuman", icon: "🧋" },
-            { nama: "Sembako", icon: "🍚" },
-            { nama: "Jasa", icon: "🛠️" },
-            { nama: "Kerajinan", icon: "🧶" }
-        ],
-
-        // Edit Daftar Dagangan (Bisa ditambah sebanyak-banyaknya)
-        produk: [
-            {
-                toko: "Warung Mang Ujang",
-                nama: "Kopi Hitam Bubuk Asli 200gr",
-                harga: "Rp 15.000",
-                gambar: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                wa: "6281234567890"
-            },
-            {
-                toko: "Kue Bu Tini",
-                nama: "Brownies Lumer Coklat",
-                harga: "Rp 35.000",
-                gambar: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                wa: "6289876543210"
-            },
-            {
-                toko: "Sayur Mak Nyak",
-                nama: "Paket Sayur Sop Komplit",
-                harga: "Rp 10.000",
-                gambar: "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                wa: "6281112223334"
-            },
-            {
-                toko: "Kerajinan Asep",
-                nama: "Tas Anyaman Bambu Unik",
-                harga: "Rp 50.000",
-                gambar: "https://images.unsplash.com/photo-1590736969955-71cc94801759?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                wa: "6285554443332"
-            }
-        ]
-    };
-
-    // -----------------------------------------
-    // 2. MESIN APLIKASI (JANGAN UBAH BAGIAN INI)
-    // -----------------------------------------
-    document.addEventListener("DOMContentLoaded", () => {
-        
-        // Pasang Berita
-        document.getElementById("teks-berita").textContent = dataAplikasi.berita;
-
-        // Pasang Slider
-        const sliderContainer = document.getElementById("image-slider");
-        let sliderHTML = '';
-        let dotsHTML = '<div class="slider-dots">';
-        
-        dataAplikasi.sliderImages.forEach((img, index) => {
-            let activeClass = index === 0 ? 'active' : '';
-            sliderHTML += `<img src="${img}" class="slide ${activeClass}" alt="Slider ${index+1}">`;
-            dotsHTML += `<div class="dot ${activeClass}"></div>`;
-        });
-        dotsHTML += '</div>';
-        sliderContainer.innerHTML = sliderHTML + dotsHTML;
-
-        // Logika Animasi Slider Otomatis
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.dot');
-        
-        if(slides.length > 1) {
+            let slideIndex = 0;
+            const slides = document.querySelectorAll(".slide");
             setInterval(() => {
-                slides[currentSlide].classList.remove('active');
-                dots[currentSlide].classList.remove('active');
-                
-                currentSlide = (currentSlide + 1) % slides.length;
-                
-                slides[currentSlide].classList.add('active');
-                dots[currentSlide].classList.add('active');
-            }, 3500); // Ganti gambar setiap 3.5 detik
+                slides[slideIndex].classList.remove("active");
+                slideIndex = (slideIndex + 1) % slides.length;
+                slides[slideIndex].classList.add("active");
+            }, 3000); // Ganti gambar setiap 3 detik
+
+            // 3. Tampilkan 6 Kotak Menu Toko
+            const tempatToko = document.getElementById("tempat-toko");
+            dataAdmin.daftarToko.forEach(toko => {
+                const kotakHtml = `
+                    <div class="kotak-toko" onclick="bukaPopup(${toko.id})">
+                        <span class="icon-toko">${toko.ikon}</span>
+                        <span class="nama-toko">${toko.nama}</span>
+                    </div>
+                `;
+                tempatToko.innerHTML += kotakHtml;
+            });
+        });
+
+        // 4. Fungsi Pop-up
+        const modal = document.getElementById("modal");
+        
+        function bukaPopup(idToko) {
+            // Cari data toko yang di klik
+            const toko = dataAdmin.daftarToko.find(t => t.id === idToko);
+            
+            // Isi pop-up dengan data toko tersebut
+            document.getElementById("popup-img").src = toko.gambar;
+            document.getElementById("popup-toko").textContent = `🏪 ${toko.nama}`;
+            document.getElementById("popup-produk").textContent = toko.produk;
+            document.getElementById("popup-harga").textContent = toko.harga;
+            
+            // Buat Link WA otomatis
+            const pesan = `Halo ${toko.nama}, saya mau pesan: ${toko.produk}. Apakah bisa?`;
+            const linkWA = `https://wa.me/${toko.wa}?text=${encodeURIComponent(pesan)}`;
+            document.getElementById("popup-wa").href = linkWA;
+            
+            // Tampilkan pop-up
+            modal.classList.add("show");
         }
 
-        // Pasang Menu Kategori
-        const menuContainer = document.getElementById("menu-kategori");
-        dataAplikasi.kategori.forEach(item => {
-            menuContainer.innerHTML += `
-                <div class="menu-item">
-                    <div class="menu-icon">${item.icon}</div>
-                    <div class="menu-text">${item.nama}</div>
-                </div>
-            `;
-        });
+        function tutupPopup() {
+            modal.classList.remove("show");
+        }
 
-        // Pasang Produk
-        const produkContainer = document.getElementById("katalog-produk");
-        dataAplikasi.produk.forEach(item => {
-            let pesanWA = `Halo ${item.toko}, saya mau pesan: ${item.nama}. Apakah masih ada?`;
-            let linkWA = `https://wa.me/${item.wa}?text=${encodeURIComponent(pesanWA)}`;
-
-            produkContainer.innerHTML += `
-                <div class="card">
-                    <img src="${item.gambar}" alt="${item.nama}">
-                    <div class="card-body">
-                        <div class="toko-nama">🏪 ${item.toko}</div>
-                        <div class="produk-nama">${item.nama}</div>
-                        <div class="produk-harga">${item.harga}</div>
-                        <a href="${linkWA}" class="btn-wa" target="_blank">📲 Pesan via WA</a>
-                    </div>
-                </div>
-            `;
-        });
-    });
-</script>
+        // Tutup pop-up jika klik di area luar kotak putih
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                tutupPopup();
+            }
+        }
+    </script>
 </body>
 </html>
