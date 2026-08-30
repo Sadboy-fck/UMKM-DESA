@@ -4,30 +4,396 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UMKM DESA - Belanja Langsung dari Warga</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* === PENGATURAN DASAR === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Membatasi lebar agar rapi di laptop, tapi full di HP */
+        .app-container {
+            max-width: 600px; /* Ukuran ala layar HP */
+            margin: 0 auto;
+            background-color: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        /* === HEADER === */
+        header {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .logo-subtitle {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        /* === BERITA MARQUEE === */
+        .news-banner {
+            background-color: #F57C00;
+            color: white;
+            display: flex;
+            padding: 8px 15px;
+            font-size: 13px;
+            font-weight: bold;
+            align-items: center;
+        }
+        .news-icon {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+
+        /* === KONTEN UTAMA === */
+        main {
+            padding: 15px;
+        }
+
+        /* === SLIDER GAMBAR === */
+        .slider-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+        }
+        .dot.active {
+            background-color: white;
+        }
+
+        /* === MENU GRID (6 KOTAK) === */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .menu-item {
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 15px 5px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: #4CAF50;
+        }
+        .menu-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .menu-text {
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* === PRODUK GRID === */
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2E7D32;
+            margin-bottom: 15px;
+            border-left: 4px solid #F57C00;
+            padding-left: 10px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding-bottom: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .toko-nama {
+            font-size: 10px;
+            color: #F57C00;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .produk-nama {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+        .produk-harga {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2E7D32;
+            margin-bottom: 12px;
+        }
+        .btn-wa {
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: auto;
+            display: block;
+        }
+        .btn-wa:hover { background-color: #128C7E; }
+
+        /* === FOOTER === */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #777;
+            font-size: 11px;
+            border-top: 1px solid #eee;
+        }
+    </style>
 </head>
 <body>
+
+<div class="app-container">
+    
+    <!-- HEADER -->
     <header>
-        <div class="logo">🎪 UMKM DESA</div>
-        <p>Dukung Pedagang Kecil di Sekitar Kita</p>
+        <div>
+            <div class="logo-title">🎪 UMKM DESA</div>
+            <div class="logo-subtitle">Dukung Pedagang Kecil Sekitar Kita</div>
+        </div>
     </header>
 
-    <section class="news-banner">
+    <!-- BERITA BERJALAN -->
+    <div class="news-banner">
         <div class="news-icon">📢 INFO:</div>
         <marquee id="teks-berita">Memuat berita terbaru...</marquee>
-    </section>
+    </div>
 
     <main>
-        <h2 class="section-title">Katalog Dagangan</h2>
-        <div class="grid-container" id="katalog-produk">
-            </div>
+        <!-- SLIDER GAMBAR -->
+        <div class="slider-container" id="image-slider">
+            <!-- Gambar slider dimuat via JavaScript -->
+        </div>
+
+        <!-- MENU GRID (6 KOTAK) -->
+        <div class="menu-grid" id="menu-kategori">
+            <!-- Menu dimuat via JavaScript -->
+        </div>
+
+        <!-- PRODUK TERBARU -->
+        <div class="section-title">Rekomendasi Hari Ini</div>
+        <div class="product-grid" id="katalog-produk">
+            <!-- Produk dimuat via JavaScript -->
+        </div>
     </main>
 
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 UMKM DESA. Dibuat untuk warga.</p>
+        <p>&copy; 2026 Aplikasi UMKM Desa. Dibuat dengan ❤ untuk warga.</p>
     </footer>
 
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+</div>
+
+<!-- ========================================== -->
+<!-- BAGIAN DATA ADMIN & MESIN APLIKASI (JAVASCRIPT) -->
+<!-- ========================================== -->
+<script>
+    // -----------------------------------------
+    // 1. DATA ADMIN (SILAKAN EDIT BAGIAN INI)
+    // -----------------------------------------
+    const dataAplikasi = {
+        
+        // Edit Teks Berita
+        berita: "Pasar UMKM Desa buka setiap hari Minggu di Balai Desa. Dapatkan diskon khusus untuk pembelian sayur organik!",
+
+        // Edit Gambar Slider (Masukkan 3 Link Gambar)
+        sliderImages: [
+            "https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", // Sayuran/Pasar
+            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", // Makanan
+            "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"  // Belanja
+        ],
+
+        // Edit 6 Menu Kategori (Ikon menggunakan Emoji agar praktis)
+        kategori: [
+            { nama: "Sayur & Buah", icon: "🥬" },
+            { nama: "Makanan", icon: "🍱" },
+            { nama: "Minuman", icon: "🧋" },
+            { nama: "Sembako", icon: "🍚" },
+            { nama: "Jasa", icon: "🛠️" },
+            { nama: "Kerajinan", icon: "🧶" }
+        ],
+
+        // Edit Daftar Dagangan (Bisa ditambah sebanyak-banyaknya)
+        produk: [
+            {
+                toko: "Warung Mang Ujang",
+                nama: "Kopi Hitam Bubuk Asli 200gr",
+                harga: "Rp 15.000",
+                gambar: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                wa: "6281234567890"
+            },
+            {
+                toko: "Kue Bu Tini",
+                nama: "Brownies Lumer Coklat",
+                harga: "Rp 35.000",
+                gambar: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                wa: "6289876543210"
+            },
+            {
+                toko: "Sayur Mak Nyak",
+                nama: "Paket Sayur Sop Komplit",
+                harga: "Rp 10.000",
+                gambar: "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                wa: "6281112223334"
+            },
+            {
+                toko: "Kerajinan Asep",
+                nama: "Tas Anyaman Bambu Unik",
+                harga: "Rp 50.000",
+                gambar: "https://images.unsplash.com/photo-1590736969955-71cc94801759?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                wa: "6285554443332"
+            }
+        ]
+    };
+
+    // -----------------------------------------
+    // 2. MESIN APLIKASI (JANGAN UBAH BAGIAN INI)
+    // -----------------------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+        
+        // Pasang Berita
+        document.getElementById("teks-berita").textContent = dataAplikasi.berita;
+
+        // Pasang Slider
+        const sliderContainer = document.getElementById("image-slider");
+        let sliderHTML = '';
+        let dotsHTML = '<div class="slider-dots">';
+        
+        dataAplikasi.sliderImages.forEach((img, index) => {
+            let activeClass = index === 0 ? 'active' : '';
+            sliderHTML += `<img src="${img}" class="slide ${activeClass}" alt="Slider ${index+1}">`;
+            dotsHTML += `<div class="dot ${activeClass}"></div>`;
+        });
+        dotsHTML += '</div>';
+        sliderContainer.innerHTML = sliderHTML + dotsHTML;
+
+        // Logika Animasi Slider Otomatis
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        
+        if(slides.length > 1) {
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                dots[currentSlide].classList.remove('active');
+                
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }, 3500); // Ganti gambar setiap 3.5 detik
+        }
+
+        // Pasang Menu Kategori
+        const menuContainer = document.getElementById("menu-kategori");
+        dataAplikasi.kategori.forEach(item => {
+            menuContainer.innerHTML += `
+                <div class="menu-item">
+                    <div class="menu-icon">${item.icon}</div>
+                    <div class="menu-text">${item.nama}</div>
+                </div>
+            `;
+        });
+
+        // Pasang Produk
+        const produkContainer = document.getElementById("katalog-produk");
+        dataAplikasi.produk.forEach(item => {
+            let pesanWA = `Halo ${item.toko}, saya mau pesan: ${item.nama}. Apakah masih ada?`;
+            let linkWA = `https://wa.me/${item.wa}?text=${encodeURIComponent(pesanWA)}`;
+
+            produkContainer.innerHTML += `
+                <div class="card">
+                    <img src="${item.gambar}" alt="${item.nama}">
+                    <div class="card-body">
+                        <div class="toko-nama">🏪 ${item.toko}</div>
+                        <div class="produk-nama">${item.nama}</div>
+                        <div class="produk-harga">${item.harga}</div>
+                        <a href="${linkWA}" class="btn-wa" target="_blank">📲 Pesan via WA</a>
+                    </div>
+                </div>
+            `;
+        });
+    });
+</script>
 </body>
 </html>
