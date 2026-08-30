@@ -1,135 +1,116 @@
-/* Pengaturan Dasar */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+<style>
+    /* PENGATURAN DASAR & LATAR BERPATERN */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    body { background-color: #1b4332; display: flex; justify-content: center; }
+    
+    .app-container {
+        width: 100%;
+        max-width: 480px;
+        /* POLA CORAK DENGAN CSS (Ringan & Cepat Dimuat) */
+        background-color: #f7f9f8;
+        background-image: radial-gradient(#2e7d321a 1.2px, transparent 1.2px);
+        background-size: 16px 16px;
+        min-height: 100vh;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        position: relative;
+        padding-bottom: 20px;
+    }
 
-body {
-    background-color: #f4f7f6;
-    color: #333;
-}
+    /* HEADER BERI HIASAN GELOMBANG/GRADIAN */
+    header { 
+        background: linear-gradient(135deg, #1b4332 0%, #2E7D32 100%); 
+        color: white; 
+        text-align: center; 
+        padding: 20px 10px 25px 10px; 
+        border-bottom-left-radius: 20px; 
+        border-bottom-right-radius: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    header h1 { font-size: 22px; margin-bottom: 3px; letter-spacing: 1px; }
+    header p { font-size: 12px; opacity: 0.9; font-weight: 300; }
+    
+    .news-ticker { 
+        background: linear-gradient(90deg, #F57C00 0%, #ff9800 100%); 
+        color: white; display: flex; padding: 8px 15px; font-size: 12px; font-weight: bold; 
+        margin-top: -14px; z-index: 10; position: relative; width: 88%; margin-left: auto; margin-right: auto; 
+        border-radius: 20px; box-shadow: 0 3px 8px rgba(245,124,0,0.3); 
+    }
+    .news-ticker span { margin-right: 8px; }
 
-/* Header */
-header {
-    background-color: #2E7D32; /* Hijau Desa */
-    color: white;
-    text-align: center;
-    padding: 20px 10px;
-}
+    /* SLIDER DENGAN BORDER EMAS */
+    .slider-container {
+        width: 85%;
+        max-width: 320px;
+        height: 135px;
+        margin: 20px auto 15px auto;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+        border: 2px solid #ffffff;
+    }
+    .slide {
+        width: 100%; height: 100%; object-fit: cover;
+        position: absolute; top: 0; left: 0;
+        opacity: 0; transition: opacity 0.8s ease-in-out;
+    }
+    .slide.active { opacity: 1; }
 
-header .logo {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    /* MENU GRID KOTAK DENGAN AKSEN / CORAK CANTIK */
+    .section-title { text-align: center; font-size: 15px; color: #1b4332; margin: 15px 0 12px 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+    .grid-toko {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 0 15px;
+    }
+    .kotak-toko {
+        /* Latar Belakang Kartu Putih Bersih dengan Border Atas Warna Hijau */
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 14px 6px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-top: 3px solid #2E7D32; /* Aksen garis atas */
+        border-left: 1px solid #f0f0f0;
+        border-right: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f0f0f0;
+        position: relative;
+        overflow: hidden;
+    }
+    .kotak-toko:active { transform: scale(0.94); background-color: #f9f9f9; }
+    .icon-toko { font-size: 30px; margin-bottom: 6px; display: block; }
+    .nama-toko { font-size: 11px; font-weight: bold; color: #2c3e50; line-height: 1.2; }
 
-/* Banner Berita */
-.news-banner {
-    background-color: #F57C00; /* Oranye UMKM */
-    color: white;
-    display: flex;
-    padding: 10px;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.news-icon {
-    margin-right: 10px;
-    white-space: nowrap;
-}
-
-/* Judul Seksi */
-.section-title {
-    text-align: center;
-    margin: 20px 0;
-    color: #2E7D32;
-}
-
-/* Grid Layout untuk Produk */
-main {
-    padding: 15px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.grid-container {
-    display: grid;
-    /* Responsif: 1 kolom di HP kecil, 2-4 kolom di layar besar */
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 15px;
-}
-
-/* Kartu Produk */
-.card {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    background-color: #eee;
-}
-
-.card-info {
-    padding: 10px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.toko-nama {
-    font-size: 12px;
-    color: #F57C00;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.produk-nama {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.produk-harga {
-    font-size: 16px;
-    font-weight: bold;
-    color: #2E7D32;
-    margin-bottom: 10px;
-}
-
-/* Tombol WhatsApp */
-.btn-wa {
-    background-color: #25D366; /* Warna khas WhatsApp */
-    color: white;
-    text-decoration: none;
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: auto; /* Mendorong tombol ke bawah */
-    display: inline-block;
-    transition: background 0.3s;
-}
-
-.btn-wa:hover {
-    background-color: #128C7E;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #333;
-    color: white;
-    margin-top: 20px;
-    font-size: 12px;
-}
+    /* POP-UP (MODAL) PRODUK & WHATSAPP */
+    .modal-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.65); backdrop-filter: blur(2px);
+        display: none; justify-content: center; align-items: center;
+        z-index: 100; opacity: 0; transition: opacity 0.3s;
+    }
+    .modal-overlay.show { display: flex; opacity: 1; }
+    .modal-content {
+        background: white; width: 85%; max-width: 310px;
+        border-radius: 18px; padding: 20px; text-align: center;
+        position: relative; transform: translateY(20px); transition: transform 0.3s;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .modal-overlay.show .modal-content { transform: translateY(0); }
+    .close-btn {
+        position: absolute; top: 10px; right: 15px;
+        font-size: 22px; color: #aaa; cursor: pointer; font-weight: bold;
+    }
+    .modal-img { width: 100%; height: 150px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; background: #eee; }
+    .modal-nama-toko { font-size: 12px; color: #F57C00; font-weight: bold; margin-bottom: 4px; }
+    .modal-produk { font-size: 17px; color: #222; font-weight: bold; margin-bottom: 4px; }
+    .modal-harga { font-size: 15px; color: #2E7D32; font-weight: bold; margin-bottom: 18px; }
+    .btn-wa {
+        display: block; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white;
+        padding: 12px; border-radius: 10px; text-decoration: none;
+        font-size: 14px; font-weight: bold; box-shadow: 0 4px 10px rgba(37,211,102,0.3);
+    }
+    .btn-wa:active { transform: scale(0.98); }
+</style>
