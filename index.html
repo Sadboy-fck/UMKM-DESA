@@ -100,7 +100,16 @@
         overflow: hidden;
     }
     .kotak-toko:active { transform: scale(0.94); background-color: #f9f9f9; }
-    .icon-toko { font-size: 30px; margin-bottom: 6px; display: block; }
+        .icon-toko-img {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 50%; /* Membuat foto jadi bentuk lingkaran */
+        margin: 0 auto 6px auto;
+        display: block;
+        border: 2px solid #2E7D32; /* Lis hijau cantik di pinggir foto */
+    }
+
     .nama-toko { font-size: 11px; font-weight: bold; color: #2c3e50; line-height: 1.2; }
 
     /* POP-UP (MODAL) PRODUK & WHATSAPP */
