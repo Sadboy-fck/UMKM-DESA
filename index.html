@@ -57,17 +57,16 @@
     .news-ticker span { margin-right: 8px; }
 
     /* SLIDER DENGAN BORDER EMAS */
-    .slider-container {
-        width: 92%;
-        max-width: 320px;
-        height: 170px;
-        margin: 15px auto 15px auto;
-        border-radius: 12px;
+        .slider-container {
+        width: 100%;            
+        aspect-ratio: 2 / 1;    /* Rasio banner (bisa diganti 16 / 9 jika gambar lebih lebar) */
+        height: auto;           /* Hapus angka px agar tidak mengunci tinggi slider */
+        margin: 15px 0;
         overflow: hidden;
         position: relative;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-        border: 2px solid #ffffff;
+        background-color: #000; /* Warna latar belakang jika ada sisa ruang */
     }
+
     .slide {
         width: 100%; height: 100%; 
         object-fit: cover;
