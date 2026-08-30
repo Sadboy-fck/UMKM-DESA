@@ -240,9 +240,9 @@
             dataAdmin.daftarToko.forEach(toko => {
                 const kotakHtml = `
                     <div class="kotak-toko" onclick="bukaPopup(${toko.id})">
-                        <span class="icon-toko">${toko.ikon}</span>
-                        <span class="nama-toko">${toko.nama}</span>
-                    </div>
+                <img src="${toko.ikon}" alt="${toko.nama}" class="icon-toko-img">
+                <span class="nama-toko">${toko.nama}</span>
+            </div>
                 `;
                 tempatToko.innerHTML += kotakHtml;
             });
