@@ -104,19 +104,19 @@
             align-content: start; /* Mencegah baris ditarik molor ke bawah */
     }
      .kotak-toko {
-        /* Menggunakan warna hijau gelap sesuai tema header agar teks putih terlihat jelas */
         background: #1b4332; 
-        border-radius: 12px;
-        padding: 14px 6px;
-        text-align: center;
-        /* Bayangan sedikit disesuaikan agar cocok dengan warna gelap */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
-        cursor: pointer;
-        transition: all 0.2s ease;
-        /* Hapus border atas lama, ganti dengan border tipis di sekelilingnya */
-        border: 1px solid #133226; 
-        position: relative;
-        overflow: hidden;
+            border-radius: 12px;
+            padding: 10px 6px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #133226; 
+            aspect-ratio: 1 / 1.15; /* Mengunci bentuk kotak agar tetap simetris & presisi */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
     }
     .kotak-toko:active { transform: scale(0.94); background-color: #f9f9f9; }
         .icon-toko-img {
