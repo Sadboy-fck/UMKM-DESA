@@ -328,6 +328,36 @@
 .sembunyi {
     display: none !important;
 }
+        /* LOCK LEBAR APLIKASI KEMBALI NORMAL */
+        html, body {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+        }
+
+        /* PERBAIKAN TOMBOL MELAYANG */
+        .btn-float-daftar {
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 15px !important;
+            z-index: 99999 !important;
+            background: #25D366 !important;
+            color: #ffffff !important;
+            padding: 10px 16px !important;
+            border-radius: 30px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            text-decoration: none !important;
+            font-size: 12px !important;
+            font-weight: bold !important;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3) !important;
+        }
+
+        
 </style>
 </head>
 <body>
