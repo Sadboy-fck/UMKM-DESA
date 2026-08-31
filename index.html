@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>UMKM DESA WANAJAYA</title>
     <style>
+                /* 2 TOMBOL PILIHAN PESAN WA */
+        .btn-wa-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .btn-wa-pickup {
+            display: block; background: linear-gradient(135deg, #1565C0 0%, #1E88E5 100%); color: white;
+            padding: 10px; border-radius: 10px; text-decoration: none;
+            font-size: 13px; font-weight: bold; box-shadow: 0 3px 8px rgba(21,101,192,0.3);
+        }
+        .btn-wa-cod {
+            display: block; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white;
+            padding: 10px; border-radius: 10px; text-decoration: none;
+            font-size: 13px; font-weight: bold; box-shadow: 0 3px 8px rgba(37,211,102,0.3);
+        }
+        .btn-wa-pickup:active, .btn-wa-cod:active { transform: scale(0.98); }
+
         <style>
         /* PENGATURAN DASAR & LATAR BERPATERN */
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
