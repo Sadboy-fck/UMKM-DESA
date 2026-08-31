@@ -129,13 +129,32 @@
             margin: 0 !important;
             line-height: 1.2 !important; }
     
-    .news-ticker { 
-        background: linear-gradient(90deg, #F57C00 0%, #ff9800 100%); 
-        color: white; display: flex; padding: 8px 15px; font-size: 12px; font-weight: bold; 
-        margin-top: -14px; z-index: 10; position: relative; width: 88%; margin-left: auto; margin-right: auto; 
-        border-radius: 20px; box-shadow: 0 3px 8px rgba(245,124,0,0.3); 
-    }
-    .news-ticker span { margin-right: 8px; }
+    .news-ticker { background: linear-gradient(90deg, #F57C00 0%, #ff9800 100%) !important; 
+            color: white !important; 
+            display: flex !important; 
+            align-items: center !important;
+            padding: 6px 14px !important; /* Ukuran dipangkas agar ramping */
+            font-size: 11px !important; 
+            font-weight: bold !important; 
+            margin: 10px auto 12px auto !important; /* Diturunkan seimbang di bawah header & di atas slider */
+            position: relative !important; 
+            z-index: 5 !important; 
+            width: 90% !important; 
+            border-radius: 20px !important; 
+            box-shadow: 0 3px 8px rgba(245,124,0,0.25) !important; 
+        }
+
+        .news-ticker span { 
+            margin-right: 8px !important; 
+            white-space: nowrap !important;
+            font-size: 11px !important;
+            display: inline-block !important;
+        }
+
+        .news-ticker marquee {
+            font-size: 11px !important;
+            vertical-align
+         }
 
     /* SLIDER DENGAN BORDER EMAS */
         .slider-container {
