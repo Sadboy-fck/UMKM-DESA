@@ -352,6 +352,21 @@
     </div>
 
     <script>
+                // FUNGSI PENCARIAN OTOMATIS
+        function filterToko() {
+            const kataKunci = document.getElementById("input-cari").value.toLowerCase();
+            const semuaKotak = document.querySelectorAll(".kotak-toko");
+
+            semuaKotak.forEach(kotak => {
+                const namaToko = kotak.textContent.toLowerCase();
+                if (namaToko.includes(kataKunci)) {
+                    kotak.style.display = "flex";
+                } else {
+                    kotak.style.display = "none";
+                }
+            });
+        }
+
         // ==========================================
         // DATA ADMIN (SILAKAN EDIT DI SINI)
         // ==========================================
