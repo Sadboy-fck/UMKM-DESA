@@ -309,26 +309,27 @@
 
         // 4. Fungsi Pop-up
         const modal = document.getElementById("modal");
-        
+
         function bukaPopup(idToko) {
-            // Cari data toko yang di klik
             const toko = dataAdmin.daftarToko.find(t => t.id === idToko);
-            
-            // Isi pop-up dengan data toko tersebut
             document.getElementById("popup-img").src = toko.gambar;
             document.getElementById("popup-toko").textContent = `🏪 ${toko.nama}`;
             document.getElementById("popup-produk").textContent = toko.produk;
             document.getElementById("popup-harga").textContent = toko.harga;
             
-            // Buat Link WA otomatis
-            const pesan = `Halo ${toko.nama}, saya mau pesan: ${toko.produk}. Apakah bisa?`;
-            const linkWA = `https://wa.me/${toko.wa}?text=${encodeURIComponent(pesan)}`;
-            document.getElementById("popup-wa").href = linkWA;
+            // 1. Format Pesan WA untuk Ambil Sendiri
+            const pesanPickup = `Halo ${toko.nama}, saya mau pesan: ${toko.produk}. Saya mau datang/ambil sendiri ya!`;
+            document.getElementById("popup-wa-pickup").href = `https://wa.me/${toko.wa}?text=${encodeURIComponent(pesanPickup)}`;
             
-            // Tampilkan pop-up
+            // 2. Format Pesan WA untuk COD / Diantar
+            const pesanCOD = `Halo ${toko.nama}, saya mau pesan: ${toko.produk} via COD. Hari ini jualan di mana / bisa diantar?`;
+            document.getElementById("popup-wa-cod").href = `https://wa.me/${toko.wa}?text=${encodeURIComponent(pesanCOD)}`;
+            
             modal.classList.add("show");
         }
 
+        
+    
         function tutupPopup() {
             modal.classList.remove("show");
         }
@@ -340,5 +341,6 @@
             }
         }
     </script>
+            
 </body>
 </html>
